@@ -1,0 +1,11 @@
+En el repo yo puse lo que subí del workshop 2, o sea que está hasta la parte del balanceador. Creería que el primer paso para movernos sería meterle el reverse proxy y asegurarnos que funciona eso para continuar con todo lo de la BD. Entonces quién se apunta? o alguno ya tiene eso? o sea re libre para hacerle modificaciones a lo que ya hay
+
+
+
+comandos:
+En el haproxy: ******
+para permitir conexiones por un puerto distinto: sudo setsebool -P haproxy_connect_any=1
+Abrir puertos del firewall: sudo firewall-cmd --add-port=8083/tcp
+
+
+
