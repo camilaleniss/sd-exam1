@@ -1,0 +1,11 @@
+---
+- hosts: databases
+  become: true
+  tasks:
+    - name: "Know web1**"
+      shell: gluster peer probe web1
+    - name: "Know web2**"
+      shell: gluster peer probe web2
+
+    - name: "Know web2**"
+      shell: cat /etc/hosts

@@ -51,6 +51,12 @@ Vagrant.configure("2") do |config|
      end 
     db.vm.provision "shell", path: "scripts/glusterfs.sh"
     db.vm.provision "shell", path: "scripts/configuration.sh"
+    db.vm.provision "ansible" do |ansible|
+      ansible.playbook = "playbooks/nginx/dbgluster.yml"
+      ansible.groups = {
+      "databases" => ["db"]
+     }
+    end
   end
 
 
@@ -99,6 +105,7 @@ Vagrant.configure("2") do |config|
     web2.vm.provision "shell", path: "scripts/configuration.sh"
     web2.vm.provision "ansible" do |ansible|
        ansible.playbook = "playbooks/nginx/webserver.yml"
+
        ansible.groups = {
        "webservers" => ["web2"]
         }

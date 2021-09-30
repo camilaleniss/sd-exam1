@@ -41,6 +41,7 @@
         enabled: yes
     - name: "Declare hostname"
       shell: "echo $HOSTNAME"
+      shell: "echo active the gluster on: $HOSTNAME"
       register: print_hostname
     - name: "Configure nginx"
       template:
