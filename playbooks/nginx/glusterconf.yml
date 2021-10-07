@@ -1,7 +1,21 @@
 ---
-- hosts: webservers
+- hosts: web2server
   become: true
   tasks:
+    - name: "Copy key db"
+      copy:
+            src: ../../.vagrant/machines/db/virtualbox/private_key
+            dest: /home/vagrant/private_key_db
+            owner: root
+            group: wheel
+            mode: '0400'
+    - name: "Copy key web1"
+      copy:
+            src: ../../.vagrant/machines/web1/virtualbox/private_key
+            dest: /home/vagrant/private_key_web1
+            owner: root
+            group: wheel
+            mode: '0400'
     - name: "Install epel repository"
       yum:
         name: epel-release
@@ -14,9 +28,6 @@
         name: nginx
         state: started
         enabled: yes
-    - name: "Declare hostname"
-      shell: "echo $HOSTNAME"
-      register: print_hostname
     - name: "Configure nginx"
       template:
         src: templates/index.j2

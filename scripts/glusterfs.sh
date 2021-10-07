@@ -2,7 +2,7 @@ yum install -y centos-release-gluster
 yum install -y glusterfs-server
 yum install -y xfsprogs
 service glusterd start
-
+echo +++++++++++++++++ **Script install glusterfs finished** ++++++++++++++++
 sfdisk /dev/sdb <<EOF
 ;
 EOF

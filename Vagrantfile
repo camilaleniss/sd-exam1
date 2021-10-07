@@ -13,7 +13,7 @@ fourthDisk = './fourthDisk.vdi'
 
 Vagrant.configure("2") do |config|
 
-  config.ssh.insert_key = false
+
 
   # This is the provisioning for the Loadbalancer
   config.vm.define "lb" do |lb|
@@ -25,6 +25,7 @@ Vagrant.configure("2") do |config|
     end
     lb.vm.provision "ansible" do |ansible|
       ansible.playbook = "playbooks/haproxy/loadbalancer.yml"
+      ansible.playbook = "playbooks/nginx-proxy/main.yml"
       ansible.extra_vars = {
          "web_servers" => [
           {"name": "web1","ip":"192.168.33.11"},
@@ -52,7 +53,7 @@ Vagrant.configure("2") do |config|
     db.vm.provision "shell", path: "scripts/glusterfs.sh"
     db.vm.provision "shell", path: "scripts/configuration.sh"
     db.vm.provision "ansible" do |ansible|
-      ansible.playbook = "playbooks/nginx/dbgluster.yml"
+      ansible.playbook = "playbooks/nginx/webserver.yml"
       ansible.groups = {
       "databases" => ["db"]
      }
@@ -104,11 +105,12 @@ Vagrant.configure("2") do |config|
     web2.vm.provision "shell", path: "scripts/glusterfs.sh"
     web2.vm.provision "shell", path: "scripts/configuration.sh"
     web2.vm.provision "ansible" do |ansible|
-       ansible.playbook = "playbooks/nginx/webserver.yml"
+       ansible.playbook = "playbooks/nginx/glusterconf.yml"
 
        ansible.groups = {
-       "webservers" => ["web2"]
+       "web2server" => ["web2"]
         }
       end
+    web2.vm.provision "shell", path: "scripts/confgluster.sh"
    end
  end
