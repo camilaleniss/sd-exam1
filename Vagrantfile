@@ -44,6 +44,7 @@ Vagrant.configure("2") do |config|
       ansible.groups = {
         "webservers" => ["web-#{i}"]
       }
+      web.vm.provision "shell", path: "scripts/glusterfs.sh"
     end
    end
   end
@@ -55,6 +56,7 @@ Vagrant.configure("2") do |config|
    db.vm.hostname = "db"
    db.vm.network "private_network", ip: "192.168.33.100"
    db.vm.provision "shell", inline: "echo Iam DB server"
+   db.vm.provision "shell", path: "scripts/glusterfs.sh"
   end
 end
 
